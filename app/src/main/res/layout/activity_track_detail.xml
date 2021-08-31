@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerView">
+
+    <data>
+
+        <import type="android.text.Html" />
+
+        <variable
+            name="track"
+            type="com.calvin.itunesearch.data.model.Track" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:orientation="vertical">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@android:color/transparent"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/ic_navigation_back" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/layoutDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="@dimen/_5sdp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/imageArtWork"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_marginEnd="@dimen/_25sdp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/image_list_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@+id/layoutTitle"
+                        app:layout_constraintEnd_toStartOf="@+id/layoutTitle"
+                        app:layout_constraintTop_toTopOf="@+id/layoutTitle"
+                        app:riv_corner_radius="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginStart="@dimen/_120sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/textTrackName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:maxLines="3"
+                            android:text="@{track.trackName==null ? track.collectionName : track.trackName}"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/_18sdp"
+                            android:transitionName="trackTitle"
+                            app:autoSizeMaxTextSize="@dimen/_18sdp"
+                            app:autoSizeMinTextSize="@dimen/_10sdp"
+                            app:autoSizeStepGranularity="@dimen/_2sdp"
+                            app:autoSizeTextType="uniform"
+                            tools:text="Moonlight" />
+
+                        <TextView
+                            android:id="@+id/textTrackArtist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{track.artistName}"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_10sdp"
+                            tools:text="George Lucas" />
+
+                        <TextView
+                            android:id="@+id/textPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom"
+                            android:text="@{track.currency + ` ` + String.valueOf(track.trackPrice == null ? track.collectionPrice : track.trackPrice)}"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/_11sdp"
+                            android:transitionName="trackPrice"
+                            tools:text="USD 19.99" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textGenre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:text="@{track.primaryGenreName}"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_13sdp"
+                        android:transitionName="trackGenre"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layoutTitle"
+                        tools:text="Action &amp; Adventure" />
+
+                    <TextView
+                        android:id="@+id/textDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_15sdp"
+                        android:text="@{track.longDescription==null ? (track.description==null ? `` : Html.fromHtml(track.description)) : track.longDescription}"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_13sdp"
+                        android:transitionName="trackGenre"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textGenre"
+                        tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+
+                </android.support.constraint.ConstraintLayout>
+            </ScrollView>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</layout>

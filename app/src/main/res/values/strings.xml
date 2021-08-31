@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Search Items On iTunes</string>
+    <string name="label_no_connection">please check your internet connection</string>
+
+    <string name="search_hint">Search items on iTunes</string>
+    <string name="warning_no_key">Please enter key string for search</string>
+</resources>
